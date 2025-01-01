@@ -30,3 +30,19 @@ class Message(models.Model):
     
     def __str__(self):
         return f"{'Bot' if self.is_bot else 'User'}: {self.content[:50]}"
+
+class CodeExecution(models.Model):
+    LANGUAGE_CHOICES = [
+        ('python', 'Python'),
+        ('django', 'Django Shell'),
+    ]
+    
+    conversation = models.ForeignKey(Conversation, related_name='code_executions', on_delete=models.CASCADE)
+    code = models.TextField()
+    output = models.TextField(blank=True)
+    error = models.TextField(blank=True)
+    language = models.CharField(max_length=20, choices=LANGUAGE_CHOICES, default='python')
+    executed_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Code Execution - {self.conversation.title}"

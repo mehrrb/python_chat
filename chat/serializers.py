@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Conversation, Message
+from .models import Conversation, Message, CodeExecution
 
 class MessageSerializer(serializers.ModelSerializer):
     class Meta:
@@ -12,3 +12,8 @@ class ConversationSerializer(serializers.ModelSerializer):
     class Meta:
         model = Conversation
         fields = ['id', 'title', 'language', 'created_at', 'messages'] 
+
+class CodeExecutionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CodeExecution
+        fields = ['id', 'code', 'output', 'error', 'language', 'executed_at'] 

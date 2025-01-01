@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Conversation, Message
+from .models import Conversation, Message, CodeExecution
 
 @admin.register(Message)
 class MessageAdmin(admin.ModelAdmin):
@@ -25,3 +25,10 @@ class ConversationAdmin(admin.ModelAdmin):
 
     def get_queryset(self, request):
         return super().get_queryset(request).select_related('user')
+
+@admin.register(CodeExecution)
+class CodeExecutionAdmin(admin.ModelAdmin):
+    list_display = ('conversation', 'language', 'executed_at')
+    list_filter = ('language', 'executed_at')
+    search_fields = ('code', 'output', 'error')
+    readonly_fields = ('executed_at',)
